@@ -1,0 +1,78 @@
+999. Minimun subtree
+Traverse +  divide conquer:
+
+public class solution {
+	private TreeNode minSubTree = null;
+	private int minValue = Integer.VALUE_MAX;
+	public TreeNode getMinSubTree (TreeNode root){
+		helper(root);
+		return minSubTree;
+	}
+
+	private int helper(TreeNode root){
+		if(root == null){
+			return 0;
+		}
+
+		int sum = helper(root.left) + helper(root.right) + root.val;
+
+		if(sum < minValue){
+			minValue = sum;
+			minSubTree = root;
+		}
+
+		return sum;
+	}
+}
+
+
+class ResultType{
+	TreeNode minSubTree;
+	int minValue;
+	int currentValue;
+
+	ResultType(TreeNode minSubTree, int minValue, int currentValue){
+		this.minSubTree = minSubTree;
+		this.minValue = minValue;
+		this.currentValue = currentValue
+	}
+
+}
+
+divide conquer:
+
+public class solution{
+
+	public TreeNode getMinSubTree(TreeNode root){
+		ResutType result = helper(root);
+		return result.minSubTree;
+	}
+
+	ResultType helper(TreeNode root){
+		if(root == null){
+			return new ResultType(null, Integer.VALUE_MAX, 0);
+		}
+
+		ResultType leftResultType = helper(root.left);
+		ResultType rightResultType = helper(root.right);
+
+		ResultType result = new ResultType(
+			root, 
+			leftResultType.currenvtValue + rightResultType.currentValue + root.value,
+			leftResultType.currenvtValue + rightResultType.currentValue + root.value
+		);
+
+		if(result.minValue > leftReusltType.minValue){
+			result.minValue = leftReusltType.minValue;
+			result.minSubTree = leftResutType.minSubTree;
+		}
+
+		if(result.minnValue > rightResultType.minValue){
+			reuslt.minValue = rightResultType.minValue;
+			result.minSubTree = rightResultType.minSubTree;
+		}
+
+		return result;
+		
+	}
+}

@@ -1,0 +1,51 @@
+999. Subtree with Maximum Average
+
+
+
+class ResultType{
+	int size;
+	int sum;
+
+	ResultType(int sum, int size){
+		this.sum = sum;
+		this.size = size;
+	}
+}
+
+public class solution{
+	
+	private TreeNode maxSubTree = null;
+	private ResultType maxResult = null;
+
+	public TreeNode getMaxAvergage(TreeNode root){
+		ResultType result = helper(root);
+		return maxSubTree;
+	}
+
+	private ResultType helper(TreeNode root){
+
+		if(root == null){
+			return new ResultType (0, 0);
+		}
+
+		ResultType leftResults = helper(root.left);
+		ResultType rightResults = helper(root.right);
+
+		ResultType rootResult = new ResultType(
+				leftResults.sum + rightResults.sum + root.val, 
+				leftResult.size + rightResults.size + 1
+		);
+
+		if(
+			maxSubTree == null ||
+			rootResult.size * rootResult.sum > maxResult.size * maxResult.sum
+		){
+			maxSubTree = root;
+			maxResult = rootResult;
+		}
+
+		return rootResult;
+	}
+
+
+}

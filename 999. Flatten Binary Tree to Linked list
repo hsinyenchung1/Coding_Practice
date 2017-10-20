@@ -1,0 +1,55 @@
+999. Flatten Binary Tree to Linked list
+
+public class solution {
+	
+	public void flatten(TreeNode root){
+		helper(root);
+	}
+
+	private TreeNode helper(TreeNode root){
+		if(root == null){
+			return null;
+		}
+
+		TreeNode leftLast = helper(root.left);
+		TreeNode rightLast = heler(root.right);
+
+		if(leftLast != null){
+			leftLast.right = root.right;
+			root.right = root.left;
+			root.left = null;
+		}
+
+		if(rightLast != null){
+			return rightLast;
+		}
+
+		if(leftLast != null){
+			return leftLast;
+		}
+
+		return root;
+	}
+}
+
+Traverse:
+
+public class Solution {
+	private TreeNode lastNode = null;
+
+	public vod flatten(TreeNode root){
+		if(root == null){
+			return;
+		}
+
+		if(lastNode != null){
+			lastNode.left = null;
+			lastNode.right = root;
+		}
+
+		lastNode = root;
+		TreeNode right = root.right;
+		flatten(root.left);
+		flatten(right);
+	}
+}
