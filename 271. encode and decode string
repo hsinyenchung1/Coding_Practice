@@ -1,0 +1,24 @@
+271. encode and decode string
+public String encode (List<String> str){
+	StringBuilder sb = new StringBuilder();
+	for(String s: str){
+		int size = s.length();
+		String slash = "/";
+		sb.append(Integer.toStirng(size)).append(slash).append(s);
+	}
+
+	return sb.toString();
+}
+
+public List<String> decode (String s){
+	List<String> result = new ArrayList<String>();
+
+	int i = 0;
+	while(i < s.length()){
+		int slash = indexOf("/", i);
+		int size = Integer.valueOf(s.substring(i, slash));
+		int str = s.substring(slash + 1, slash + size + 1);
+		result.add(str);
+	}
+	return result;
+}

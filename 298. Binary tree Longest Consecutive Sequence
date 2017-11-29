@@ -1,0 +1,23 @@
+298. 
+Binary tree Longest Consecutive Sequence
+
+private int maxLength = 0;
+
+public int LCS (TreeNode root){
+	helper(root, null, 0);
+
+	return maxLength;
+}
+
+public void helper (TreeNode current, TreeNode pre, int length){
+	if(current == null){
+		return;
+	}
+
+	length = (pre != null && pre.val + 1 == current.val) ? length + 1 : 1;
+	helper(current.left, current, length);
+	helper(current.right, current, length);
+}
+
+O(N)
+O(N)

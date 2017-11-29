@@ -1,0 +1,22 @@
+294. flip game
+
+public boolean flipGame(String s){
+	HashMap<String, boolean> winMap = new HashMap<String, boolean>();
+	return helper(s, winMap);
+}
+
+public boolean helper(String s, HashMap<String, boolean> winMap){
+	
+	for(int i = 0; i < s.length() - 1; i++){
+		if(s.startWith("++", i)){
+			String t = s.subString(0, i) + "--" + s.subString(i,s.length());
+		}
+
+		if(!helper(t, winMap)){
+			winMap.put(s, true);
+			return true;
+		}
+	}
+	winMap.put(s,false);
+	return false;
+}

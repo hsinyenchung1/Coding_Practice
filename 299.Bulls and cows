@@ -1,0 +1,36 @@
+299.Bulls and cows
+public Stirng bullsAndCows(String friendGuess, String secretNumber){
+	if(friendGuess == null || friendGuess.length() == 0){
+		return "";
+	}
+	int bullCount = 0;
+	int[] bullPositopn = new int[friendGuess.length()];
+	for(int i = 0; i < secretNumber; i++){
+		if(friendGuess.charAt(i) == secretNumber.charAt(i)){
+			bullCount++;
+			bullPosistion[i]++;
+		}
+	}
+
+	HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+
+	for(int i = 0; i < friendGuess.length(); i++{
+		if(map.containsKey(friendGuess.charAt(i))){
+			map.put(friendGuess.charAt(i), map.get(friendGuess.charAt(i)) + 1 );
+		}else{
+			map.put(friendGuess.charAt(i), 1);
+		}
+	}
+
+	int cowCount = 0;
+	for(int i = 0; i < secretNumber.length(); i++){
+		if(map.containsKey(secretNumber.charAt(i))){
+			if(map.get(secretNumber.charAt(i)) > 0){
+				cowCount++;
+				map.put(secretNumber.charAt(i), map.get(secretNumber.charAt(i)) - 1);
+			}
+		}
+	}
+
+	return bullCount.toStirng() + "A" + cowCount.toString() + "B"; 
+}
