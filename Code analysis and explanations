@@ -1,0 +1,287 @@
+Chatper 5 - Notes start from NQueen 
+
+Word Ladder 1
+public class WordLadderSolution{
+	
+	public int getWordLadder(String start, String end, Set<String> dict){
+		if(dict == null){
+			return -1;
+		}
+
+		Set<String> hash = new HashSet<>();
+		Queue<String> queue = new LinkedList<>();
+
+		hash.add(start);
+		queue.offer(start);
+
+		int distance = 0;
+		while(!queue.isEmpty()){
+
+			String currString = queue.poll();
+			List<string> neighbors = getCurrentStringNeighbors(currString);
+			distance += 1;
+			for(String neighbor : neighbors){
+				if(hash.contains(neighbor)){
+					continue;
+				}else{
+					if(neighbor.equal(end)){
+						return distance;
+					}
+					queue.add(neighbor);
+					hash.add(neighnor);
+				}	
+			}
+		}
+
+		return -1;
+	}
+
+	private List<String> getCurrentStringNeighbors(String currString, Set<String> dist){
+
+		List<String> list = new ArrayList<>();
+
+		char[] charString = replace(currString);
+		for(char c : charString){ // O(L)
+			for(char i = 'a'; i <= 'z'; i++){ //25
+				c = i
+
+				if(i == c){
+					continue;
+				}
+
+				if(dist.contains(charString.toString())){
+					list.add(charString.toString());
+				}
+		
+			}
+		}
+		
+		return list;
+	}
+
+	private char[] replace (String currString){
+		char[] result = new char[currString.length];
+		result = currString.toCharArray();
+		return result;
+	}
+
+}
+Word Ladder 2 
+
+Chapter 6 
+palindrome-partitioning
+copy list with random pointer
+sort list
+merge two sorted arrays
+convert sorted list to balanced bst
+delete node in the middle of singly linked list
+convert binary search tree to doubly linked list
+inersection of two arrays
+median of two sorted arrays
+maximum subarray
+minmun subarray
+subarray sum
+subarray sum cloeset
+
+chapter 7
+window sum
+Move Zeroes
+remove duplicate numbers in array
+valid palindrome
+rotate string
+
+two sum
+
+HashMap solution:
+what you can do is the create a hashmap before adding the element into a hashmap, we need to check the if the target - current value if we found it which means that we have the value in hashmap when we can return we find 
+
+public int[] twopointer(int[] nums, int target){
+	if(nums == null || nums.length == 0){
+		return new int[]{-1, -1};
+	}
+
+	Map<int, int> map = new HashMap<>();
+
+	for(int i = 0; i < nums.length; i++){
+		if(map.containsKey(target - nums[i])){
+			return new int[]{map.get(target - nums[i]), i};
+		}else{
+			map.put(nums[i], i);
+		} 
+	}
+
+	return new int[]{-1, -1};
+	
+}
+
+TwoPointer:
+first create two pointers one will be pointing to head, other one will be pointing to tail.
+second sum up head and tail to compare with target if the sum is greater than target we need to decrease tail
+if the sum is leaser than target we need to increace one for head. then do the first step again until the find the corret value or two pointers touch each other. 
+
+public int[] twopointer (int[] nums, int target){
+	if(nums == null || nums.length == 0){
+		return nums;
+	}
+
+	int low = 0;
+	int hight = nums.length - 1;
+
+	while(low < high){
+		if(nums[low] + nums[high] == target){
+			return new int [low, high];
+		}else if(nums[low] + nums[high] < target){
+			low++;
+		}else if(nums[low] + nums[high] > target){
+			high--;
+		}
+	}
+
+	retrun new int[-1, -1];
+}
+
+Two sum - data structure desgin
+
+Add function: 
+I used arraylist for storing the input list without dupilcation
+I used hashmap's key to story each number and value for how many time does appear
+
+this will take O(1) for time complexcity 
+
+Find function:
+I loop thought the arrayList to get the other pair of value. When each iteration target element - current value. result = target - current. Used the result to check if result == current value and the current value is more than one in hashmap then return true. or check if the result is not equal to current value and then check if it is exists in hashmap then we return true. After the loop fininshes, it means that we do not find the other pair I will return false
+
+O(n)
+public class TwoSum{
+
+	private List<Integer> list = null;
+	private Map<Integer, Integer> map = null;
+
+	public TwoSum(){
+		this.list = new ArrayList<>();
+		this.map = new HashMap<>();
+	}
+
+	public void add(int number){
+		if(map.containsKey(number)){
+			map.put(number, map.get(number) + 1);
+		}else{
+			map.put(number, 1);
+			list.add(number);
+		}
+	}
+
+	public boolean find(int value){
+		for(int i = 0; i < list.size(); i++){
+			int nums1 = list.get(i);
+			int nums2 = value - nums1;
+			if(num1 == num2 && map.get(num1) > 1 || (nums1 != num2 && map.containsKey(num2))){
+				return ture;
+			}
+		}
+		return false;
+	}
+}
+
+TwoSum unique pairs
+Step 1: check if the list of number is not null and length = 0
+Step 2: create a left and right pointing to first element and last element
+Step 3: check if the left plus right are equeal to target if yes, left++ right--
+after incease and decrease the left and right. We need to check if the current left and right are duplicated 
+I will use the while loop to check if the current left or current right are equal to the prevouse element then 
+left or right need to increase one more time. Before incease or decrease the index we need to check the boundary of the index.
+if it is out of bound we cannot incease or decrease the the index number
+
+public int twoSumUniquePairs(int[] nums, int target){
+	if(nums == null || nums.length == 0){
+		return 0;
+	}
+
+	Array.sort(nums);
+	int left = 0; 
+	int right = nums.length - 1;
+	int count = 0;
+
+	while(left < right){
+		if(nums[left] + nums[right] == target){
+			left++;
+			right--;
+			count++;
+
+			while(left < right && nums[left] == nums[left - 1]){
+				left++;
+			}
+			while(left < right && nums[right] == nums[right + 1]){
+				right--;
+			}
+		}else if(nums[left] + nums[right] < target){
+			left++;
+		}else if(nums[left] + nums[right] > target){
+			right++;
+		}
+	}
+	return count;
+}
+
+3Sum 
+
+TwoPointer Sulotion 
+It will be a similar solution as two sum. for two sum, it is a a + b = target. Now it will be a + b + c = 0;.
+Therefore, we can put a into other other side of equation. b + c = -a
+Then we can start the same proccess as two sum. 
+Step 1: Create a for loop for iterate thoguht the list. Each of loop will have the while loop for finding the two sum of -A
+if we find the result we add it to a result list.
+
+puleftliright List<List<Integer>> 3sum (int nums){
+	
+	List<List<Integer>> result = new ArrayList<>();
+	if(nums == null || nums.length == 0){
+		return result;
+	}
+
+	Array.sort(nums);
+
+	for(int i = 0; i < nums.length - 2; i++){
+
+		if(i > 0 && nums[i] == nums[i - 1]){
+			continues;
+		}
+		int a = -nums[i];
+
+		int left = i + 1;
+		int right = nums.length - 1;
+		
+		two(left, right, a, result, nums);
+	}
+
+	return result;
+}
+
+public void twoSum(int left, int right, int a, List<List<Integer> result, int[] nums){
+	
+	while(left < right){
+			if(nums[left] + nums[right] == a){
+				left++;
+				right--;
+				result.add(new ArrayList<>(a, left, right));
+
+				while(left < right &&  nums[left] == nums[left - 1]){
+					left++;
+				}
+
+				while(left < right && nums[right] == nums[right + 1]){
+					right--;
+				}
+			}else if(nums[left] + nums[right] < a){
+				left++''
+			}else{
+				right--;
+			}
+		}
+}
+
+Triangle Count
+
+
+
+
